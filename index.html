@@ -9,15 +9,22 @@
     <title>Creative Score</title>
     <link rel="icon" type="image/svg+xml" href="./logo/creative-score-mark-full-colour.svg" />
     <!--
-      The layout a person left the app in, put on <html> before anything is
-      drawn, so the first paint is already the right one. It reads the same
-      store and the same person key as apps/web/src/layout/layoutStore.ts;
-      a test holds the two to the same answer. Signed out, or anything it
-      cannot read, means the current layout.
+      The layout and the colour theme a person left the app in, put on <html>
+      before anything is drawn, so the first paint is already the right one.
+      It reads the same store and the same person key as
+      apps/web/src/layout/layoutStore.ts and apps/web/src/appearance/themeStore.ts;
+      a test holds the three to the same answer. Signed out, or anything it
+      cannot read, means the current layout and the default theme.
     -->
     <script>
       (function () {
+        var THEMES = [
+          'violet-bloom', 'genie-purple', 'fuchsia-pop', 'peony', 'soft-orchid',
+          'marigold-ink', 'indigo-ink', 'midnight', 'harbour-blue', 'lagoon-teal',
+          'emerald', 'fern-forest', 'ochre', 'terracotta', 'rosewood', 'plum', 'graphite'
+        ];
         var layout = 'current';
+        var theme = 'violet-bloom';
         try {
           var store = JSON.parse(window.localStorage.getItem('cs-demo-store') || 'null') || {};
           var who = store.signedIn || null;
@@ -26,14 +33,20 @@
           if (saved === 'b' || saved === 'current') {
             layout = saved;
           }
+          var savedTheme = person && store.themes ? store.themes[person] : null;
+          if (THEMES.indexOf(savedTheme) !== -1) {
+            theme = savedTheme;
+          }
         } catch (error) {
           layout = 'current';
+          theme = 'violet-bloom';
         }
         document.documentElement.setAttribute('data-layout', layout);
+        document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>
-    <script type="module" crossorigin src="/creative-score-demo/assets/index-Cb4uCYOU.js"></script>
-    <link rel="stylesheet" crossorigin href="/creative-score-demo/assets/index-CEvC1tlC.css">
+    <script type="module" crossorigin src="/creative-score-demo/assets/index-B86ktA8W.js"></script>
+    <link rel="stylesheet" crossorigin href="/creative-score-demo/assets/index-DuFFD3d2.css">
   </head>
   <body>
     <div id="root"></div>
